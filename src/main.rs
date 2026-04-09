@@ -75,17 +75,19 @@ fn run() -> Result<(), String> {
     }
 
     if had_error {
-        Err("one or more directories failed".to_string())
-    } else {
-        Ok(())
+        return Err(String::new());
     }
+
+    Ok(())
 }
 
 fn main() -> ExitCode {
     match run() {
         Ok(()) => ExitCode::SUCCESS,
         Err(e) => {
-            eprintln!("error: {e}");
+            if !e.is_empty() {
+                eprintln!("error: {e}");
+            }
             ExitCode::FAILURE
         }
     }
