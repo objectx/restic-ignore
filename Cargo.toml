@@ -12,3 +12,5 @@ tempfile = "3"
 [profile.release]
 strip = true
 lto = true
+opt-level = "z"
+panic = "abort"
