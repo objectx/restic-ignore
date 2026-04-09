@@ -80,3 +80,24 @@ fn verbose_prints_create_message() {
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(stderr.contains("create:"), "verbose mode should print creation messages");
 }
+
+#[test]
+fn handles_multiple_directories() {
+    let dir = tempfile::tempdir().unwrap();
+    let a = dir.path().join("a");
+    let b = dir.path().join("b");
+
+    let output = restic_ignore()
+        .args([a.to_str().unwrap(), b.to_str().unwrap()])
+        .output()
+        .unwrap();
+    assert!(output.status.success());
+    assert!(a.join(".RESTIC-IGNORE").exists());
+    assert!(b.join(".RESTIC-IGNORE").exists());
+}
+
+#[test]
+fn no_arguments_succeeds_with_no_output() {
+    let output = restic_ignore().output().unwrap();
+    assert!(output.status.success());
+}
