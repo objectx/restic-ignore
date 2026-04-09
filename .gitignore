@@ -81,3 +81,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### Rust template
+/target/
